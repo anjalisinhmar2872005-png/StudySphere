@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analytics - StudySphere</title>
+</head>
+
+<body>
+
+    <h1>📊 StudySphere Analytics</h1>
+
+    <hr>
+
+    <h2>📝 Task Statistics</h2>
+
+    <p>Total Tasks: {{ total_tasks }}</p>
+    <p>Completed Tasks: {{ completed_tasks }}</p>
+    <p>Pending Tasks: {{ pending_tasks }}</p>
+
+    <hr>
+
+    <h2>🎯 Goal Statistics</h2>
+
+    <p>Total Goals: {{ total_goals }}</p>
+    <p>Completed Goals: {{ completed_goals }}</p>
+     <hr>
+
+<h2>⏱️ Study Time</h2>
+
+<p>
+    Total Study Time:
+    {{ total_study_hours }} hours
+</p>
+
+<p>
+    Total Study Minutes:
+    {{ total_study_minutes }} minutes
+</p>
+
+<hr>
+
+<h2>🔥 Study Streak</h2>
+<p>Current Study Streak: {{ current_streak }} days</p>
+
+    <hr>
+
+    <h2>📚 Subject Progress</h2>
+
+    {% if subject_data %}
+
+        {% for subject in subject_data %}
+
+            <h3>{{ subject.name }}</h3>
+
+            <p>
+                Topics Completed:
+                {{ subject.completed_topics }}
+                /
+                {{ subject.total_topics }}
+            </p>
+
+            <p>
+                Progress:
+                {{ subject.progress }}%
+            </p>
+
+            <hr>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No subjects available.</p>
+
+    {% endif %}
+
+    <br>
+
+    <a href="{% url 'dashboard' %}">
+        ← Back to Dashboard
+    </a>
+<div style="width: 90%; max-width: 800px; margin: 30px auto;">
+    <h2>📊 Subject Progress Chart</h2>
+
+    <canvas id="subjectChart"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const subjectNames = [
+        {% for subject in subject_data %}
+            "{{ subject.name|escapejs }}",
+        {% endfor %}
+    ];
+
+    const subjectProgress = [
+        {% for subject in subject_data %}
+            {{ subject.progress }},
+        {% endfor %}
+    ];
+
+    new Chart(document.getElementById("subjectChart"), {
+        type: "bar",
+
+        data: {
+            labels: subjectNames,
+
+            datasets: [{
+                label: "Progress (%)",
+                data: subjectProgress
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 100
+                }
+            }
+        }
+    });
+</script>
+<div style="width: 90%; max-width: 800px; margin: 40px auto;">
+    <h2>📝 Task Overview</h2>
+
+    <canvas id="taskChart"></canvas>
+</div>
+
+<script>
+    new Chart(document.getElementById("taskChart"), {
+        type: "bar",
+
+        data: {
+            labels: ["Total Tasks", "Completed", "Pending"],
+
+            datasets: [{
+                label: "Tasks",
+                data: [
+                    {{ total_tasks }},
+                    {{ completed_tasks }},
+                    {{ pending_tasks }}
+                ]
+            }]
+        },
+
+        options: {
+            responsive: true,
+
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+</body>
+
+</html>

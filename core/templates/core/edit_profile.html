@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile - StudySphere</title>
+</head>
+
+<body>
+
+    <h1>Edit Profile</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+
+    </form>
+    {% csrf_token %}
+
+    <label>Name:</label>
+    <input type="text" name="name" value="{{ profile.name }}"><br><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" value="{{ profile.email }}"><br><br>
+
+    <label>Course:</label>
+    <input type="text" name="course" value="{{ profile.course }}"><br><br>
+
+    <label>College:</label>
+    <input type="text" name="college" value="{{ profile.college }}"><br><br>
+
+    <label>Bio:</label><br>
+    <textarea name="bio">{{ profile.bio }}</textarea><br><br>
+
+    <label>Skills:</label><br>
+    <textarea name="skills">{{ profile.skills }}</textarea><br><br>
+
+    <label>Education:</label><br>
+    <textarea name="education">{{ profile.education }}</textarea><br><br>
+    
+    <label>Profile Photo:</label>
+<input type="file" name="profile_photo"><br><br>
+
+    <button type="submit">Save Profile</button>
+</form>
+
+</body>
+</html>

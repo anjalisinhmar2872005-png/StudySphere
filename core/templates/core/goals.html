@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Goals - StudySphere</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+            padding: 25px;
+        }
+
+        /* Header */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 7px 0 0;
+            color: #64748b;
+        }
+
+        .add-btn {
+            background: #4f46e5;
+            color: white;
+            text-decoration: none;
+            padding: 11px 17px;
+            border-radius: 9px;
+            font-weight: bold;
+        }
+
+        .add-btn:hover {
+            background: #4338ca;
+        }
+
+        /* Goal grid */
+        .goals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 20px;
+        }
+
+        /* Goal card */
+        .goal-card {
+            background: white;
+            padding: 22px;
+            border-radius: 16px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+            transition: 0.2s;
+        }
+
+        .goal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 22px rgba(0,0,0,0.09);
+        }
+
+        .goal-card h2 {
+            margin: 0 0 15px;
+            color: #4f46e5;
+            font-size: 21px;
+        }
+
+        .info {
+            margin: 9px 0;
+            color: #64748b;
+            line-height: 1.5;
+        }
+
+        .info strong {
+            color: #334155;
+        }
+
+        /* Priority */
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .high {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Progress */
+        .progress-section {
+            margin-top: 18px;
+        }
+
+        .progress-top {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 7px;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #4f46e5;
+            border-radius: 10px;
+        }
+
+        /* Status */
+        .status {
+            margin-top: 16px;
+            padding: 10px;
+            border-radius: 9px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .active {
+            background: #eef2ff;
+            color: #4f46e5;
+        }
+
+        .completed {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        /* Description */
+        .description {
+            margin-top: 15px;
+            padding: 12px;
+            background: #f8fafc;
+            border-radius: 9px;
+            color: #475569;
+        }
+
+        /* Actions */
+        .actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .actions a {
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .edit-btn {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+
+        .delete-btn {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .actions a:hover {
+            opacity: 0.8;
+        }
+
+        /* Empty */
+        .empty {
+            background: white;
+            padding: 40px;
+            text-align: center;
+            border-radius: 16px;
+            color: #64748b;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 25px;
+            color: #4f46e5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back:hover {
+            text-decoration: underline;
+        }
+
+        /* Mobile */
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header h1 {
+                font-size: 25px;
+            }
+
+            .add-btn {
+                width: 100%;
+                text-align: center;
+            }
+
+            .goals {
+                grid-template-columns: 1fr;
+            }
+
+            .actions {
+                flex-direction: column;
+            }
+
+            .actions a {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+
+        <div>
+            <h1>🎯 My Goals</h1>
+
+            <p>
+                Set targets, track your progress and achieve your goals.
+            </p>
+        </div>
+
+        <a class="add-btn" href="{% url 'add_goal' %}">
+            ➕ Add Goal
+        </a>
+
+    </div>
+
+
+    <!-- Goals -->
+    {% if goals %}
+
+        <div class="goals">
+
+            {% for goal in goals %}
+
+                <div class="goal-card">
+
+                    <h2>{{ goal.title }}</h2>
+
+
+                    {% if goal.description %}
+
+                        <div class="description">
+                            <strong>📝 Description:</strong><br>
+                            {{ goal.description }}
+                        </div>
+
+                    {% endif %}
+
+
+                    <p class="info">
+                        <strong>📅 Target Date:</strong>
+                        {{ goal.target_date }}
+                    </p>
+
+
+                    <p class="info">
+                        <strong>⚡ Priority:</strong>
+
+                        {% if goal.priority == "High" %}
+                            <span class="badge high">High</span>
+
+                        {% elif goal.priority == "Medium" %}
+                            <span class="badge medium">Medium</span>
+
+                        {% else %}
+                            <span class="badge low">Low</span>
+                        {% endif %}
+
+                    </p>
+
+
+                    <!-- Progress -->
+                    <div class="progress-section">
+
+                        <div class="progress-top">
+
+                            <strong>Progress</strong>
+
+                            <span>{{ goal.progress }}%</span>
+
+                        </div>
+
+                        <div class="progress-bar">
+
+                            <div class="progress-fill"
+                                 style="width: {{ goal.progress }}%;">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Status -->
+                    {% if goal.status == "Completed" %}
+
+                        <div class="status completed">
+                            ✅ Completed
+                        </div>
+
+                    {% else %}
+
+                        <div class="status active">
+                            🎯 Active
+                        </div>
+
+                    {% endif %}
+
+
+                    <!-- Actions -->
+                    <div class="actions">
+
+                        <a class="edit-btn"
+                           href="{% url 'edit_goal' goal.id %}">
+                            ✏️ Edit
+                        </a>
+
+                        <a class="delete-btn"
+                           href="{% url 'delete_goal' goal.id %}">
+                            🗑️ Delete
+                        </a>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="empty">
+
+            <h2>🎯 No Goals Yet</h2>
+
+            <p>
+                Create your first goal and start tracking your progress.
+            </p>
+
+            <a class="add-btn" href="{% url 'add_goal' %}">
+                ➕ Create First Goal
+            </a>
+
+        </div>
+
+    {% endif %}
+
+
+    <a class="back" href="{% url 'dashboard' %}">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+</html>

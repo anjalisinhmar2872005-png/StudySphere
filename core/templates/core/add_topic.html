@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Topic - StudySphere</title>
+</head>
+
+<body>
+
+    <h1>Add Topic 📚</h1>
+
+    <h2>{{ subject.subject_name }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Topic Name:</label><br>
+        <input type="text" name="topic_name" required>
+        <br><br>
+
+        <label>Chapter / Unit:</label><br>
+        <input type="text" name="chapter">
+        <br><br>
+
+        <label>Description:</label><br>
+        <textarea name="description"></textarea>
+        <br><br>
+
+        <label>Priority:</label><br>
+        <select name="priority">
+            <option value="Low">Low</option>
+            <option value="Medium" selected>Medium</option>
+            <option value="High">High</option>
+        </select>
+        <br><br>
+
+        <button type="submit">Save Topic</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'topics' subject.id %}">← Back to Topics</a>
+
+</body>
+</html>

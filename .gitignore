@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+db.sqlite3
+db_backup.sqlite3
+db_export.sqlite3
+db_data.json
+
+.env
+media/
+staticfiles/
+
+.vscode/

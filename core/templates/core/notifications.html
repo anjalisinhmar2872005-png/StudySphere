@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Notifications - StudySphere</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+        }
+
+        h1 {
+            margin-bottom: 25px;
+        }
+
+        .notification {
+            background: white;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        .unread {
+            border-left: 5px solid #2563eb;
+        }
+
+        .read {
+            opacity: 0.75;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 4px 9px;
+            border-radius: 12px;
+            font-size: 12px;
+        }
+
+        .message {
+            color: #555;
+        }
+
+        .type {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .delete-btn {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 7px 13px;
+            background: #dc2626;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🔔 My Notifications</h1>
+
+    {% if notifications %}
+
+        {% for notification in notifications %}
+
+            <div class="notification {% if notification.is_read %}read{% else %}unread{% endif %}">
+
+                <h3>
+                    {{ notification.title }}
+
+                    {% if not notification.is_read %}
+                        <span class="badge">NEW</span>
+                    {% endif %}
+                </h3>
+
+                <p class="message">
+                    {{ notification.message }}
+                </p>
+
+                <p class="type">
+                    Type: {{ notification.notification_type }}
+                </p>
+
+                <small>
+                    {{ notification.created_at }}
+                </small>
+
+                <br>
+
+                <a class="delete-btn"
+                   href="{% url 'delete_notification' notification.id %}"
+                   onclick="return confirm('Are you sure you want to delete this notification?');">
+                    🗑️ Delete
+                </a>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <p>No notifications yet 🎉</p>
+
+    {% endif %}
+
+    <a class="back" href="{% url 'dashboard' %}">
+        ← Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>

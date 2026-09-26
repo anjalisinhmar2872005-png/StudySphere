@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Subject - StudySphere</title>
+</head>
+
+<body>
+
+    <h1>Add New Subject 📚</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Subject Name:</label><br>
+        <input type="text" name="subject_name" required>
+        <br><br>
+
+        <label>Subject Code:</label><br>
+        <input type="text" name="subject_code">
+        <br><br>
+
+        <label>Semester:</label><br>
+        <input type="number" name="semester" required>
+        <br><br>
+
+        <label>Description:</label><br>
+        <textarea name="description"></textarea>
+        <br><br>
+
+        <button type="submit">Save Subject</button>
+    </form>
+
+    <br>
+
+    <a href="{% url 'subjects' %}">← Back to Subjects</a>
+
+</body>
+</html>

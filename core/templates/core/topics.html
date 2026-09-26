@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{{ subject.subject_name }} - Topics | StudySphere</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            margin: 0;
+            padding: 30px;
+            color: #1f2937;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2563eb, #4338ca);
+            color: white;
+            padding: 32px;
+            border-radius: 18px;
+            margin-bottom: 25px;
+        }
+
+        .header h1 {
+            margin: 0 0 10px;
+            font-size: 30px;
+        }
+
+        .header p {
+            margin: 0 0 20px;
+            font-size: 16px;
+        }
+
+        .add-btn {
+            display: inline-block;
+            padding: 10px 16px;
+            background: white;
+            color: #2563eb;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+        }
+
+        /* Topic Card */
+        .topic-card {
+            background: white;
+            padding: 22px;
+            margin-bottom: 18px;
+            border-radius: 14px;
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .topic-card h2 {
+            margin: 0 0 14px;
+            color: #1d4ed8;
+            font-size: 22px;
+        }
+
+        .info {
+            margin: 8px 0;
+            font-size: 15px;
+        }
+
+        .priority-high {
+            color: #dc2626;
+            font-weight: bold;
+        }
+
+        .priority-medium {
+            color: #d97706;
+            font-weight: bold;
+        }
+
+        .priority-low {
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .description {
+            color: #555;
+            margin-top: 12px;
+            line-height: 1.5;
+        }
+
+        /* Status */
+        .status {
+        display: block;
+        margin-top: 15px;
+        padding: 12px 15px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        text-align: center;
+}
+
+        .completed {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .not-completed {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 18px;
+        }
+
+        .complete-btn,
+        .edit-btn,
+        .delete-btn {
+            padding: 7px 11px;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: bold;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .complete-btn {
+            background: #16a34a;
+            color: white;
+        }
+
+        .complete-btn:hover {
+            background: #15803d;
+        }
+
+        .edit-btn {
+            background: #2563eb;
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #1d4ed8;
+        }
+
+        .delete-form {
+            margin-left: auto;
+        }
+
+        .delete-btn {
+            background: #dc2626;
+            color: white;
+            border: none;
+        }
+
+        .delete-btn:hover {
+            background: #b91c1c;
+        }
+
+        /* Empty */
+        .empty {
+            background: white;
+            padding: 30px;
+            text-align: center;
+            border-radius: 14px;
+            color: #666;
+        }
+
+        /* Back */
+        .back-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 9px 14px;
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+    <div class="header">
+
+        <h1>📚 {{ subject.subject_name }}</h1>
+
+        <p>
+            Manage your topics and track your learning progress.
+        </p>
+
+        <a class="add-btn"
+           href="{% url 'add_topic' subject.id %}">
+            ➕ Add Topic
+        </a>
+
+    </div>
+
+
+    <!-- Topics -->
+    {% if topics %}
+
+        {% for topic in topics %}
+
+            <div class="topic-card">
+
+                <h2>
+                    {{ topic.topic_name }}
+                </h2>
+
+
+                <div class="info">
+                    📖 <strong>Chapter:</strong>
+                    {{ topic.chapter }}
+                </div>
+
+
+                <div class="info">
+                    ⚡ <strong>Priority:</strong>
+
+                    {% if topic.priority == "High" %}
+
+                        <span class="priority-high">
+                            High
+                        </span>
+
+                    {% elif topic.priority == "Medium" %}
+
+                        <span class="priority-medium">
+                            Medium
+                        </span>
+
+                    {% else %}
+
+                        <span class="priority-low">
+                            Low
+                        </span>
+
+                    {% endif %}
+                </div>
+
+
+                {% if topic.description %}
+
+                    <div class="description">
+                        {{ topic.description }}
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Status -->
+                {% if topic.is_completed %}
+
+                    <div class="status completed">
+                        ✅ Completed
+                    </div>
+
+                {% else %}
+
+                    <div class="status not-completed">
+                        ⏳ Not Completed
+                    </div>
+
+                {% endif %}
+
+
+                <!-- Buttons -->
+                <div class="buttons">
+
+                    {% if topic.is_completed %}
+
+                        <a class="complete-btn"
+                           href="{% url 'toggle_topic' topic.id %}">
+                            ↩️ Incomplete
+                        </a>
+
+                    {% else %}
+
+                        <a class="complete-btn"
+                           href="{% url 'toggle_topic' topic.id %}">
+                            ✅ Complete
+                        </a>
+
+                    {% endif %}
+
+
+                    <a class="edit-btn"
+                       href="{% url 'edit_topic' topic.id %}">
+                        ✏️ Edit
+                    </a>
+
+
+                    <form class="delete-form"
+                          method="POST"
+                          action="{% url 'delete_topic' topic.id %}"
+                          onsubmit="return confirm('Are you sure you want to delete this topic?');">
+
+                        {% csrf_token %}
+
+                        <button type="submit"
+                                class="delete-btn">
+                            🗑️ Delete
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        {% endfor %}
+
+    {% else %}
+
+        <div class="empty">
+
+            <h3>No topics added yet.</h3>
+
+            <p>
+                Start by adding your first topic.
+            </p>
+
+        </div>
+
+    {% endif %}
+
+
+    <!-- Back -->
+    <a class="back-btn"
+       href="{% url 'subjects' %}">
+        ← Back to Subjects
+    </a>
+
+</div>
+
+</body>
+
+</html>

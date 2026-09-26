@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About - StudySphere</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f8fafc;
+            color: #1e293b;
+        }
+
+        nav {
+            background: white;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2563eb;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #334155;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover {
+            color: #2563eb;
+        }
+
+        .login-btn {
+            background: #2563eb;
+            color: white !important;
+            padding: 9px 16px;
+            border-radius: 8px;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 75px 7%;
+            background: linear-gradient(135deg, #eff6ff, #f8fafc);
+        }
+
+        .hero h1 {
+            font-size: 44px;
+            margin-bottom: 15px;
+        }
+
+        .hero h1 span {
+            color: #2563eb;
+        }
+
+        .hero p {
+            max-width: 700px;
+            margin: auto;
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.7;
+        }
+
+        .section {
+            max-width: 1000px;
+            margin: auto;
+            padding: 60px 7%;
+        }
+
+        .section h2 {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 20px;
+        }
+
+        .section > p {
+            color: #64748b;
+            line-height: 1.8;
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 18px rgba(0,0,0,0.06);
+            text-align: center;
+        }
+
+        .icon {
+            font-size: 35px;
+            margin-bottom: 12px;
+        }
+
+        .card h3 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #64748b;
+            line-height: 1.6;
+            font-size: 14px;
+        }
+
+        .developer {
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            padding: 55px 7%;
+        }
+
+        .developer p {
+            color: #cbd5e1;
+            max-width: 650px;
+            margin: 12px auto;
+            line-height: 1.7;
+        }
+
+        footer {
+            background: #020617;
+            color: #cbd5e1;
+            text-align: center;
+            padding: 25px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        @media (max-width: 750px) {
+
+            nav {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 34px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+
+    <div class="logo">
+        📚 StudySphere
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{% url 'home' %}">
+            Home
+        </a>
+
+        <a href="{% url 'login' %}" class="login-btn">
+            Login
+        </a>
+
+        <a href="{% url 'register' %}">
+            Register
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="hero">
+
+    <h1>
+        About <span>StudySphere</span>
+    </h1>
+
+    <p>
+        StudySphere is a student-focused academic productivity platform
+        designed to help students organize their studies, manage tasks,
+        track progress and work towards their academic goals.
+    </p>
+
+</section>
+
+
+<section class="section">
+
+    <h2>Why StudySphere?</h2>
+
+    <p>
+        Students often manage subjects, assignments, study schedules
+        and academic goals using different tools. StudySphere brings
+        these activities together into one organized platform.
+    </p>
+
+    <div class="cards">
+
+        <div class="card">
+
+            <div class="icon">📚</div>
+
+            <h3>Organize</h3>
+
+            <p>
+                Manage subjects, topics, study plans and academic tasks
+                from one place.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">📊</div>
+
+            <h3>Track Progress</h3>
+
+            <p>
+                Monitor topic completion, study activity,
+                tasks and academic progress.
+            </p>
+
+        </div>
+
+
+        <div class="card">
+
+            <div class="icon">🎯</div>
+
+            <h3>Achieve Goals</h3>
+
+            <p>
+                Set academic goals and stay focused on your
+                study targets.
+            </p>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="section">
+
+    <h2>How StudySphere Helps</h2>
+
+    <p>
+        StudySphere combines planning, tracking and analytics
+        to give students a clearer view of their academic journey.
+        Features such as Smart Priority and Progress Analytics
+        help students understand what needs attention.
+    </p>
+
+</section>
+
+
+<section class="developer">
+
+    <h2>About the Developer</h2>
+
+    <p>
+        StudySphere is developed as an academic project using
+        Python and Django, with database management and
+        modern web technologies.
+    </p>
+
+</section>
+
+
+<footer>
+
+    <p>
+        © 2026 <strong>StudySphere</strong>.
+        Smart Study. Better Progress.
+    </p>
+
+</footer>
+
+</body>
+</html>
