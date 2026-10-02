@@ -228,7 +228,6 @@ def smart_priority_view(request):
     )
 
 
-@login_required
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
