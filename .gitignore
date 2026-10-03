@@ -10,3 +10,4 @@ media/
 staticfiles/
 
 .vscode/
+live_data.json
